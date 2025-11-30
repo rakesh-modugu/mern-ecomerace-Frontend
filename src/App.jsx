@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductsPage from "./pages/ProductsPage";
 import CartPage from "./pages/CartPage";
-import OrdersPage from "./pages/OrdersPage"; // Kotha Import
+import OrdersPage from "./pages/OrdersPage";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/orders" element={<OrdersPage />} /> {/* Kotha Route */}
+        <Route path="/orders" element={<OrdersPage />} />
       </Routes>
     </div>
   );
