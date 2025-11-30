@@ -1,0 +1,50 @@
+.nav-header {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+  margin-bottom: 16px;
+}
+
+.nav-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #000;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.nav-active {
+  font-weight: 600;
+}
+
+.nav-user {
+  font-size: 14px;
+  color: #444;
+}
+
+.nav-logout {
+  background: none;
+  border: 1px solid #222;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}

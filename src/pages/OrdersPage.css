@@ -1,0 +1,45 @@
+.orders-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.orders-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.orders-loading,
+.orders-empty {
+  text-align: center;
+  padding: 20px;
+}
+
+.order-box {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.order-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.order-items {
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
