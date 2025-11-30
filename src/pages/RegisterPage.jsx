@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { apiRequest } from "../api";
-import "./RegisterPage.css";
+import "./Auth.css";
 
 function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -14,55 +14,48 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-
     try {
       await apiRequest("/api/auth/register", {
         method: "POST",
         body: JSON.stringify(form)
       });
       navigate("/login");
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div className="register-container">
-      <h2 className="register-title">Register</h2>
+    <div className="auth-container">
+      <div className="auth-box">
+        <h2>Create Account</h2>
+        <p className="auth-sub">Join our community today</p>
 
-      {error && <p className="register-error">{error}</p>}
+        {error && <div className="error-msg">{error}</div>}
 
-      <form className="register-form" onSubmit={handleSubmit}>
-        <input
-          name="name"
-          className="register-input"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Full Name</label>
+            <input name="name" onChange={handleChange} required />
+          </div>
 
-        <input
-          name="email"
-          className="register-input"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-        />
+          <div className="form-group">
+            <label>Email</label>
+            <input name="email" type="email" onChange={handleChange} required />
+          </div>
 
-        <input
-          type="password"
-          name="password"
-          className="register-input"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
+          <div className="form-group">
+            <label>Password</label>
+            <input name="password" type="password" onChange={handleChange} required />
+          </div>
 
-        <button className="register-btn" type="submit">
-          Create account
-        </button>
-      </form>
+          <button type="submit" className="btn auth-btn">Register</button>
+        </form>
+
+        <p className="auth-link">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

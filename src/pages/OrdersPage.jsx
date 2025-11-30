@@ -6,56 +6,63 @@ function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchOrders = async () => {
-    const userId = localStorage.getItem("userId");
-
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const data = await apiRequest(`/api/orders?userId=${userId}`);
-      setOrders(data.orders || []);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await apiRequest("/api/orders");
+        setOrders(data.orders || []);
+      } catch (e) {
+        console.error("Failed to load orders", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchOrders();
   }, []);
 
-  if (loading) return <div className="orders-loading">Loading orders...</div>;
+  if (loading) return <div className="container"><p>Loading your orders...</p></div>;
 
-  if (orders.length === 0)
-    return <div className="orders-empty">No orders found</div>;
+  if (orders.length === 0) {
+    return (
+      <div className="container empty-orders">
+        <h2>No orders yet</h2>
+        <p>Go shopping and grab some clothes!</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="orders-container">
-      <h2 className="orders-title">Your Orders</h2>
-
-      {orders.map((order) => (
-        <div className="order-box" key={order._id}>
-          <div className="order-header">
-            <div>Order ID: {order._id}</div>
-            <div>Total: ₹{order.totalAmount}</div>
-            <div>Date: {new Date(order.createdAt).toLocaleDateString()}</div>
-          </div>
-
-          <div className="order-items">
-            {order.items.map((item, index) => (
-              <div className="order-item" key={index}>
-                <div>{item.productId?.name}</div>
-                <div>Size: {item.size}</div>
-                <div>Qty: {item.quantity}</div>
-                <div>₹{item.price}</div>
+    <div className="container orders-page">
+      <h1>My Orders</h1>
+      <div className="orders-list">
+        {orders.map((order) => (
+          <div key={order._id} className="order-card">
+            <div className="order-header">
+              <div>
+                <span className="label">Order ID:</span> {order._id}
               </div>
-            ))}
+              <div>
+                <span className="label">Date:</span> {new Date(order.createdAt).toLocaleDateString()}
+              </div>
+              <div className="order-total">
+                Total: ₹{order.totalAmount}
+              </div>
+            </div>
+
+            <div className="order-items">
+              {order.items.map((item, index) => (
+                <div key={index} className="order-item-row">
+                  <span>{item.productId ? item.productId.name : "Unknown Item"}</span>
+                  <span>Size: {item.size}</span>
+                  <span>Qty: {item.quantity}</span>
+                  <span>₹{item.price}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

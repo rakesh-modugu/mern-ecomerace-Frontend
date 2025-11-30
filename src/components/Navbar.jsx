@@ -1,65 +1,35 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [logged, setLogged] = useState(false);
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setLogged(!!token);
-
-    const name = localStorage.getItem("userName");
-    setUserName(name || "");
-  }, [location.pathname]);
+  const token = localStorage.getItem("token");
+  const userName = localStorage.getItem("userName");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userName");
-    setLogged(false);
+    localStorage.clear();
     navigate("/login");
   };
 
-  const isActive = (path) =>
-    location.pathname === path ? "nav-active" : "";
-
   return (
-    <header className="nav-header">
-      <nav className="nav-container">
-        <Link className="nav-logo" to="/">
-          Clothing Store
-        </Link>
-
+    <nav className="navbar">
+      <div className="container nav-content">
+        <Link to="/" className="logo">PASOVIT</Link>
         <div className="nav-links">
-          <Link className={isActive("/")} to="/">Products</Link>
-
-          <Link className={isActive("/cart")} to="/cart">Cart</Link>
-
-          {logged ? (
+          <Link to="/">Shop</Link>
+          <Link to="/cart">Cart</Link>
+          {token ? (
             <>
-              <span className="nav-user">Hi, {userName}</span>
-
-              <Link className={isActive("/orders")} to="/orders">
-                Orders
-              </Link>
-
-              <button className="nav-logout" onClick={handleLogout}>
-                Logout
-              </button>
+              <Link to="/orders">Orders</Link>
+              <span className="user-tag">{userName}</span>
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
             </>
           ) : (
-            <>
-              <Link className={isActive("/login")} to="/login">Login</Link>
-              <Link className={isActive("/register")} to="/register">Register</Link>
-            </>
+            <Link to="/login" className="login-link">Login</Link>
           )}
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
 

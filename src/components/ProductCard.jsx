@@ -1,32 +1,23 @@
 import "./ProductCard.css";
 
 function ProductCard({ product, onAddToCart }) {
+  const handleAdd = () => {
+    onAddToCart(product._id);
+  };
+
   return (
-    <div className="card">
-      <img src={product.image} alt={product.name} />
-
-      <div className="category">{product.category}</div>
-      <h3 className="name">{product.name}</h3>
-      <p className="desc">{product.description}</p>
-      <div className="price">₹{product.price}</div>
-
-      <select
-        className="size-box"
-        defaultValue=""
-        onChange={(e) => onAddToCart(product, e.target.value)}
-      >
-        <option value="" disabled>Select size</option>
-        {product.sizes.map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-
-      <button
-        className="add-btn"
-        onClick={() => onAddToCart(product)}
-      >
-        Add to Cart
-      </button>
+    <div className="product-card">
+      <div className="product-img-box">
+        <img src={product.image || "https://placehold.co/300x300"} alt={product.name} />
+      </div>
+      <div className="product-info">
+        <span className="product-cat">{product.category}</span>
+        <h3>{product.name}</h3>
+        <p className="product-price">₹{product.price}</p>
+        <button className="btn add-cart-btn" onClick={handleAdd}>
+          View Details / Add
+        </button>
+      </div>
     </div>
   );
 }
